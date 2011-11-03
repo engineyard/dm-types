@@ -142,6 +142,7 @@ module DataMapper
 
         def track(resource, property)
           @resource, @property = resource, property
+        rescue RuntimeError # prevent modification of frozen objects
         end
 
       end # Hooker
