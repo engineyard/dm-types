@@ -18,7 +18,7 @@ Gem::Specification.new do |gem|
   gem.require_paths    = [ "lib" ]
 
   gem.add_runtime_dependency 'ardm-core',   '~> 1.2'
-  gem.add_runtime_dependency 'bcrypt-ruby', '~> 3.0'
+  gem.add_runtime_dependency 'bcrypt',      '~> 3.0'
   gem.add_runtime_dependency 'fastercsv',   '~> 1.5'
   gem.add_runtime_dependency 'multi_json',  '~> 1.0'
   gem.add_runtime_dependency 'stringex',    '~> 1.3'
