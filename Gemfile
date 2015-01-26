@@ -1,40 +1,21 @@
 require 'pathname'
 
-source 'http://rubygems.org'
+source 'https://rubygems.org'
+
+gemspec
 
 SOURCE         = ENV.fetch('SOURCE', :git).to_sym
 REPO_POSTFIX   = SOURCE == :path ? ''                                : '.git'
-DATAMAPPER     = SOURCE == :path ? Pathname(__FILE__).dirname.parent : 'http://github.com/datamapper'
+DATAMAPPER     = SOURCE == :path ? Pathname(__FILE__).dirname.parent : 'http://github.com/ar-dm'
 DM_VERSION     = '~> 1.2.0'
 DO_VERSION     = '~> 0.10.6'
 DM_DO_ADAPTERS = %w[ sqlite postgres mysql oracle sqlserver ]
 CURRENT_BRANCH = ENV.fetch('GIT_BRANCH', 'master')
 
-gem 'bcrypt-ruby', '~> 3.0'
-gem 'fastercsv',   '~> 1.5'
-gem 'multi_json',  '~> 1.0'
-gem 'json',        '~> 1.6', :platforms => [ :ruby_18 ]
-gem 'stringex',    '~> 1.3'
-gem 'uuidtools',   '~> 2.1'
-
-gem 'dm-core',     DM_VERSION, SOURCE => "#{DATAMAPPER}/dm-core#{REPO_POSTFIX}", :branch => CURRENT_BRANCH
+gem 'ardm-core',     DM_VERSION, SOURCE => "#{DATAMAPPER}/ardm-core#{REPO_POSTFIX}", :branch => CURRENT_BRANCH
 
 group :development do
-
-  gem 'dm-validations', DM_VERSION, SOURCE => "#{DATAMAPPER}/dm-validations#{REPO_POSTFIX}", :branch => CURRENT_BRANCH
-  gem 'rake',           '~> 0.9'
-  gem 'rspec',          '~> 1.3'
-
-end
-
-platforms :mri_18 do
-  group :quality do
-
-    gem 'rcov',      '~> 0.9.10'
-    gem 'yard',      '~> 0.7.2'
-    gem 'yardstick', '~> 0.4'
-
-  end
+  gem 'ardm-validations', DM_VERSION, SOURCE => "#{DATAMAPPER}/ardm-validations#{REPO_POSTFIX}", :branch => CURRENT_BRANCH
 end
 
 group :datamapper do
@@ -61,7 +42,7 @@ group :datamapper do
   end
 
   plugins = ENV['PLUGINS'] || ENV['PLUGIN']
-  plugins = plugins.to_s.tr(',', ' ').split.push('dm-migrations').uniq
+  plugins = plugins.to_s.tr(',', ' ').split.push('ardm-migrations').uniq
 
   plugins.each do |plugin|
     gem plugin, DM_VERSION, SOURCE => "#{DATAMAPPER}/#{plugin}#{REPO_POSTFIX}", :branch => CURRENT_BRANCH
