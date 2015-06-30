@@ -5,9 +5,9 @@ try_spec do
   require './spec/fixtures/bookmark'
 
   describe DataMapper::TypesFixtures::Bookmark do
-    supported_by :all do
+    supported_by :each do
       describe 'without URI' do
-        before :all do
+        before :each do
           @uri = nil
           @resource = DataMapper::TypesFixtures::Bookmark.new(
             :title  => 'Check this out',
@@ -16,26 +16,26 @@ try_spec do
             :tags   => %w[ misc ]
           )
 
-          @resource.save.should be(true)
+          expect(@resource.save).to be(true)
         end
 
         it 'can be found by uri' do
-          DataMapper::TypesFixtures::Bookmark.first(:uri => @uri).should == @resource
+          expect(DataMapper::TypesFixtures::Bookmark.first(:uri => @uri)).to eq(@resource)
         end
 
         describe 'when reloaded' do
-          before :all do
+          before :each do
             @resource.reload
           end
 
           it 'has no uri' do
-            @resource.uri.should be_nil
+            expect(@resource.uri).to be_nil
           end
         end
       end
 
       describe 'with a blank URI' do
-        before :all do
+        before :each do
           @uri = ''
           DataMapper::TypesFixtures::Bookmark.auto_migrate!
           @resource = DataMapper::TypesFixtures::Bookmark.new(
@@ -45,30 +45,30 @@ try_spec do
             :tags   => %w[ misc ]
           )
 
-          @resource.save.should be(true)
+          expect(@resource.save).to be(true)
         end
 
         it 'can be found by uri' do
-          DataMapper::TypesFixtures::Bookmark.first(:uri => @uri).should == @resource
+          expect(DataMapper::TypesFixtures::Bookmark.first(:uri => @uri)).to eq(@resource)
         end
 
         describe 'when reloaded' do
-          before :all do
+          before :each do
             @resource.reload
           end
 
           it 'is loaded as URI object' do
-            @resource.uri.should be_an_instance_of(Addressable::URI)
+            expect(@resource.uri).to be_an_instance_of(Addressable::URI)
           end
 
           it 'has the same original URI' do
-            @resource.uri.to_s.should == @uri
+            expect(@resource.uri.to_s).to eq(@uri)
           end
         end
       end
 
       describe 'with invalid URI' do
-        before :all do
+        before :each do
           @uri = 'this is def. not URI'
           @resource = DataMapper::TypesFixtures::Bookmark.new(
             :title  => 'Check this out',
@@ -79,7 +79,7 @@ try_spec do
         end
 
         it 'is perfectly valid (URI type does not provide auto validations)' do
-          @resource.save.should be(true)
+          expect(@resource.save).to be(true)
         end
       end
 
@@ -108,7 +108,7 @@ try_spec do
       http://www.hulu.com/watch/62475/the-simpsons-gone-maggie-gone#s-p1-so-i0
       ].each do |uri|
         describe "with URI set to '#{uri}'" do
-          before :all do
+          before :each do
             @resource = DataMapper::TypesFixtures::Bookmark.new(
               :title  => 'Check this out',
               :uri    => uri,
@@ -116,20 +116,20 @@ try_spec do
               :tags   => %w[ misc ]
             )
 
-            @resource.save.should be(true)
+            expect(@resource.save).to be(true)
           end
 
           it 'can be found by uri' do
-            DataMapper::TypesFixtures::Bookmark.first(:uri => uri).should_not be_nil
+            expect(DataMapper::TypesFixtures::Bookmark.first(:uri => uri)).not_to be_nil
           end
 
           describe 'when reloaded' do
-            before :all do
+            before :each do
               @resource.reload
             end
 
             it 'has the same original URI' do
-              @resource.uri.to_s.should eql(uri)
+              expect(@resource.uri.to_s).to eql(uri)
             end
           end
         end
