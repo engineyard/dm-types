@@ -16,13 +16,13 @@ try_spec do
   require './spec/fixtures/person'
 
   describe DataMapper::TypesFixtures::Person do
-    supported_by :all do
-      before :all do
+    supported_by :each do
+      before :each do
         @resource = DataMapper::TypesFixtures::Person.new(:name => 'Thomas Edison')
       end
 
       describe 'with positions indirectly mutated as a hash' do
-        before :all do
+        before :each do
           @resource.positions = {
             'company' => "Soon To Be Dirty, LLC",
             'title'   => "Layperson",
@@ -34,7 +34,7 @@ try_spec do
         end
 
         describe "when I change positions" do
-          before :all do
+          before :each do
             @resource.clean?.should == true
             @resource.positions['title'] = 'Chief Layer of People'
             @resource.save
@@ -47,7 +47,7 @@ try_spec do
         end
 
         describe "when I add a new attribute of the position" do
-          before :all do
+          before :each do
             @resource.clean?.should == true
             @resource.positions['pays_buttloads_of_money'] = true
             @resource.save
@@ -60,7 +60,7 @@ try_spec do
         end
 
         describe "when I change the details of the position" do
-          before :all do
+          before :each do
             @resource.clean?.should == true
             @resource.positions['details'].merge!('awesome' => "VERY TRUE")
             @resource.save
@@ -80,7 +80,7 @@ try_spec do
         end
 
         describe "when I reload the resource while the property is dirty" do
-          before :all do
+          before :each do
             @resource.positions['title'] = 'Chief Layer of People'
             @resource.reload
           end
@@ -94,7 +94,7 @@ try_spec do
       end # positions indirectly mutated as a hash
 
       describe 'with positions indirectly mutated as an array' do
-        before :all do
+        before :each do
           @resource.positions = [
             { 'company' => "Soon To Be Dirty, LLC",
               'title'   => "Layperson",
@@ -107,7 +107,7 @@ try_spec do
         end
 
         describe "when I remove the position" do
-          before :all do
+          before :each do
             @resource.clean?.should == true
             @resource.positions.pop
             @resource.save
@@ -120,7 +120,7 @@ try_spec do
         end
 
         describe "when I add a new position" do
-          before :all do
+          before :each do
             @resource.clean?.should == true
             @resource.positions << {
               'company' => "Down and Dirty, LP",
@@ -141,7 +141,7 @@ try_spec do
           end
 
           describe "when I change the details of one of the positions" do
-            before :all do
+            before :each do
               @resource.positions.last['details'].merge!('high_risk' => true)
               @resource.save
               @resource.reload
@@ -161,7 +161,7 @@ try_spec do
         end # when I add a new position
 
         describe "when I remove the position with a block-based mutator" do
-          before :all do
+          before :each do
             @resource.clean?.should == true
             @resource.positions.reject! { |_| true }
             @resource.save
@@ -174,7 +174,7 @@ try_spec do
         end
 
         describe "when I mutate positions through a reference" do
-          before :all do
+          before :each do
             @resource.clean?.should == true
             @positions = @resource.positions
             @positions << {

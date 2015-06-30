@@ -5,9 +5,9 @@ try_spec do
   require './spec/fixtures/bookmark'
 
   describe DataMapper::TypesFixtures::Bookmark do
-    supported_by :all do
+    supported_by :each do
       describe 'without URI' do
-        before :all do
+        before :each do
           @uri = nil
           @resource = DataMapper::TypesFixtures::Bookmark.new(
             :title  => 'Check this out',
@@ -24,7 +24,7 @@ try_spec do
         end
 
         describe 'when reloaded' do
-          before :all do
+          before :each do
             @resource.reload
           end
 
@@ -35,7 +35,7 @@ try_spec do
       end
 
       describe 'with a blank URI' do
-        before :all do
+        before :each do
           @uri = ''
           DataMapper::TypesFixtures::Bookmark.auto_migrate!
           @resource = DataMapper::TypesFixtures::Bookmark.new(
@@ -53,7 +53,7 @@ try_spec do
         end
 
         describe 'when reloaded' do
-          before :all do
+          before :each do
             @resource.reload
           end
 
@@ -68,7 +68,7 @@ try_spec do
       end
 
       describe 'with invalid URI' do
-        before :all do
+        before :each do
           @uri = 'this is def. not URI'
           @resource = DataMapper::TypesFixtures::Bookmark.new(
             :title  => 'Check this out',
@@ -108,7 +108,7 @@ try_spec do
       http://www.hulu.com/watch/62475/the-simpsons-gone-maggie-gone#s-p1-so-i0
       ].each do |uri|
         describe "with URI set to '#{uri}'" do
-          before :all do
+          before :each do
             @resource = DataMapper::TypesFixtures::Bookmark.new(
               :title  => 'Check this out',
               :uri    => uri,
@@ -124,7 +124,7 @@ try_spec do
           end
 
           describe 'when reloaded' do
-            before :all do
+            before :each do
               @resource.reload
             end
 

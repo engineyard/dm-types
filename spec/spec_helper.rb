@@ -9,7 +9,7 @@ Dir["#{Pathname(__FILE__).dirname.expand_path}/shared/*.rb"].each { |file| requi
 
 DataMapper::Spec.setup
 
-Spec::Runner.configure do |config|
+RSpec.configure do |config|
   config.extend(DataMapper::Spec::Adapters::Helpers)
 end
 

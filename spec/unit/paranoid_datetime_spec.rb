@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe DataMapper::Property::ParanoidDateTime do
-  before :all do
+  before :each do
     Object.send(:remove_const, :Blog) if defined?(Blog)
     module ::Blog
       class Draft
@@ -23,7 +23,7 @@ describe DataMapper::Property::ParanoidDateTime do
     @model = Blog::Article
   end
 
-  supported_by :all do
+  supported_by :each do
     describe 'Resource#destroy' do
       before do
         pending 'Does not work with < 1.8.7, see if backports fixes it' if RUBY_VERSION < '1.8.7'

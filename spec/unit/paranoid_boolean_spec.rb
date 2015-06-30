@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe DataMapper::Property::ParanoidBoolean do
-  before :all do
+  before :each do
     Object.send(:remove_const, :Blog) if defined?(Blog)
 
     module ::Blog
@@ -24,7 +24,7 @@ describe DataMapper::Property::ParanoidBoolean do
     @model = Blog::Article
   end
 
-  supported_by :all do
+  supported_by :each do
     describe 'Resource#destroy' do
       subject { @resource.destroy }
 

@@ -5,18 +5,18 @@ try_spec do
   require './spec/fixtures/person'
 
   describe DataMapper::TypesFixtures::Person do
-    supported_by :all do
-      before :all do
+    supported_by :each do
+      before :each do
         @resource = DataMapper::TypesFixtures::Person.new(:name => '')
       end
 
       describe 'with no interests information' do
-        before :all do
+        before :each do
           @resource.interests = nil
         end
 
         describe 'when dumped and loaded again' do
-          before :all do
+          before :each do
             @resource.save.should be(true)
             @resource.reload
           end
@@ -28,12 +28,12 @@ try_spec do
       end
 
       describe 'with no interests information' do
-        before :all do
+        before :each do
           @resource.interests = []
         end
 
         describe 'when dumped and loaded again' do
-          before :all do
+          before :each do
             @resource.save.should be(true)
             @resource.reload
           end
@@ -54,13 +54,13 @@ try_spec do
       end
 
       describe 'with a few items on the interests list' do
-        before :all do
+        before :each do
           @input = 'fire, water, fire, a whole lot of other interesting things, ,,,'
           @resource.interests = @input
         end
 
         describe 'when dumped and loaded again' do
-          before :all do
+          before :each do
             @resource.save.should be(true)
             @resource.reload
           end
